@@ -1,6 +1,6 @@
 ###### flips-challenge
 # Flip's Challenge
-## Powered By Datapoint.Software
+## Powered By [Datapoint.Software](https://datapoint.software/pt/)
 
 ### Summary:
 
@@ -54,8 +54,7 @@ The evaluation parameters for this challenge are:
 - Ability to read, interpret and implement features from API documentation;
 - Ability to deploy;
 - Ability to meet deadlines;
-- Structure and quality of the code (review made on a date after the challenge);
-- Have fun.
+- Structure and quality of the code (review made on a date after the challenge)
 
 
 ## Deadline:
@@ -63,3 +62,5 @@ The evaluation parameters for this challenge are:
 The challenge starts at 9:30.
 
 At 16:15 the challenge will end, and at 16:30 you will present the results live.
+
+## Have fun!
