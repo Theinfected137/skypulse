@@ -4,7 +4,7 @@
 
 <form class="search-form" action="">
   <div>
-    <input (keyup)="searchCities(city)" [(ngModel)]="city" [ngModelOptions]="{ standalone: true }"
+    <input class="city-input" (keyup)="searchCities(city)" [(ngModel)]="city" [ngModelOptions]="{ standalone: true }"
       placeholder="Procure sua Cidade" (focus)="showSuggestions = true" (blur)="hideSuggestions()">
 
     <div class="suggestions-dropdown" *ngIf="showSuggestions && suggestions.length > 0">
