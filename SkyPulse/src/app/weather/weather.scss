@@ -1,0 +1,54 @@
+.forecast-container {
+  margin-top: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+
+  h3 {
+    margin-bottom: 1rem;
+  }
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.forecast-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+
+  h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+  }
+
+  img {
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+.temps {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+
+  .max {
+    color: #ff6b6b;
+    font-weight: bold;
+  }
+
+  .min {
+    color: #74b9ff;
+  }
+}
+
+.nomedacidade {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}

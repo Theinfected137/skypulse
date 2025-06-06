@@ -14,4 +14,11 @@ export class WeatherService {
   getWeather(city: string): Observable<any> {
     return this.http.get(`${this.apiUrl}?q=${city}&appid=${this.apiKey}&units=metric`);
   }
+
+  get5DayForecast(city: string): Observable<any> {
+    return this.http.get(
+      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${this.apiKey}&units=metric&cnt=40`
+    );
+  }
+
 }

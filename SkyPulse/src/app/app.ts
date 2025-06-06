@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { WeatherService } from './weather';
+import { WeatherService } from './weather.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -12,16 +12,56 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
-export class App{
+export class App {
   city = '';
   weatherData: any;
 
-  constructor(private weatherService: WeatherService) {}
+  constructor(private weatherService: WeatherService) { }
 
   searchWeather() {
     this.weatherService.getWeather(this.city).subscribe(data => {
       this.weatherData = data;
-      console.log(data);
+    });
+    this.getForecast();
+  }
+
+  forecastData: any;
+  dailyForecasts: any[] = [];
+
+  getForecast() {
+    console.log('Attempting to fetch forecast for:', this.city); // Debug 1
+    this.weatherService.get5DayForecast(this.city).subscribe({
+      next: (data) => {
+        console.log('Forecast data received:', data); // Debug 2
+        this.forecastData = data;
+        this.processForecastData(data);
+      },
+      error: (err) => {
+        console.error('Forecast error:', err); // Debug 3
+      }
     });
   }
+
+  processForecastData(data: any) {
+    const forecastsByDay: { [key: string]: any } = {};
+
+    data.list.forEach((forecast: any) => {
+      const date = new Date(forecast.dt * 1000);
+      const dateString = date.toISOString().split('T')[0];
+
+      if (!forecastsByDay[dateString] || date.getHours() === 12) {
+        forecastsByDay[dateString] = {
+          ...forecast,
+          dateObj: date
+        };
+      }
+    });
+
+    this.dailyForecasts = Object.values(forecastsByDay)
+      .sort((a, b) => a.dateObj - b.dateObj)
+      .slice(0, 5);
+
+    console.log('Processed forecasts:', this.dailyForecasts);
+  }
+
 }
