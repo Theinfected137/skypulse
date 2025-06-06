@@ -61,7 +61,8 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "deployment:build:production"
+              "buildTarget": "deployment:build:production",
+              "baseHref":"/skypulse/"
             },
             "development": {
               "buildTarget": "deployment:build:development"
