@@ -1,11 +1,27 @@
-<!-- <div>
-  <input [(ngModel)]="city" placeholder="Enter city">
-  <button (click)="searchWeather()">Get Weather</button>
+<h1>SkyPulse</h1>
 
+<p class="lead">Procura pela a Cidade que deseja que agente fará o resto.</p>
+
+<form action="">
+  <input (keydown.enter)="searchWeather()" [(ngModel)]="city" [ngModelOptions]="{ standalone: true }" placeholder="Procure sua Cidade">
+</form>
+
+<div>
   <div *ngIf="weatherData">
-    <h2>Weather in {{ weatherData.name }}</h2>
-    <p>🌡️ Temp: {{ weatherData.main?.temp }}°C</p>
-    <p>☁️ Conditions: {{ weatherData.weather?.[0]?.description }}</p>
-    <p>💨 Wind: {{ weatherData.wind?.speed }} m/s</p>
+    <div>
+      <h3 class="nomedacidade">{{ weatherData.name }}</h3>
+      <p>{{ weatherData.main?.temp }}°C</p>
+    </div>
+    <div>
+      <p>☁️ Conditions: {{ weatherData.weather?.[0]?.description }}</p>
+      <p>💨 Wind: {{ weatherData.wind?.speed }} m/s</p>
+    </div>
   </div>
-</div> -->
+  <div>
+    <div class="5dayforescast">
+      <!-- @for (item of items; track $index) {
+
+      } -->
+    </div>
+  </div>
+</div>
