@@ -1,10 +1,9 @@
-<app-weather></app-weather>
 <h1>SkyPulse</h1>
 
 <p class="lead">Procura pela a Cidade que deseja que agente fará o resto.</p>
 
 <form action="">
-  <input (keydown.enter)="searchWeather()" [(ngModel)]="city" placeholder="Procure sua Cidade">
+  <input (keydown.enter)="searchWeather()" [(ngModel)]="city" [ngModelOptions]="{ standalone: true }" placeholder="Procure sua Cidade">
 </form>
 
 <div>

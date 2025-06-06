@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { Weather } from './weather/weather';
 import { WeatherService } from './weather';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -9,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, Weather, FormsModule, HttpClientModule],
+  imports: [CommonModule, RouterOutlet, FormsModule, HttpClientModule],
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
