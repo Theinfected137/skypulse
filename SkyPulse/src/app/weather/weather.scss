@@ -52,3 +52,19 @@
   font-size: 2rem;
   margin-bottom: 0.5rem;
 }
+
+.loading-spinner {
+  padding: 1rem;
+  text-align: center;
+  color: #74b9ff;
+  font-weight: bold;
+}
+
+.error-message {
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: rgba(255, 107, 107, 0.2);
+  border-left: 4px solid #ff6b6b;
+  color: #ff6b6b;
+  border-radius: 4px;
+}

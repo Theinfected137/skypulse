@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { WeatherService } from './weather.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -15,46 +14,4 @@ import { HttpClientModule } from '@angular/common/http';
 export class App {
   city = '';
   weatherData: any;
-
-  constructor(private weatherService: WeatherService) { }
-
-  searchWeather() {
-    this.weatherService.getWeather(this.city).subscribe(data => {
-      this.weatherData = data;
-    });
-    this.getForecast();
-  }
-
-  forecastData: any;
-  dailyForecasts: any[] = [];
-
-  getForecast() {
-    this.weatherService.get5DayForecast(this.city).subscribe({
-      next: (data) => {
-        this.forecastData = data;
-        this.processForecastData(data);
-      },
-    });
-  }
-
-  processForecastData(data: any) {
-    const forecastsByDay: { [key: string]: any } = {};
-
-    data.list.forEach((forecast: any) => {
-      const date = new Date(forecast.dt * 1000);
-      const dateString = date.toISOString().split('T')[0];
-
-      if (!forecastsByDay[dateString] || date.getHours() === 12) {
-        forecastsByDay[dateString] = {
-          ...forecast,
-          dateObj: date
-        };
-      }
-    });
-
-    this.dailyForecasts = Object.values(forecastsByDay)
-      .sort((a, b) => a.dateObj - b.dateObj)
-      .slice(0, 5);
-  }
-
 }

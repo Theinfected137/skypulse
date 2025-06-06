@@ -3,9 +3,20 @@
 <p class="lead">Procura pela a Cidade que deseja que agente fará o resto.</p>
 
 <form action="">
-  <input (keydown.enter)="searchWeather(); getForecast()" [(ngModel)]="city" [ngModelOptions]="{ standalone: true }"
+  <input 
+    (keydown.enter)="searchWeather()" 
+    [(ngModel)]="city" 
+    [ngModelOptions]="{ standalone: true }"
     placeholder="Procure sua Cidade">
 </form>
+
+<div *ngIf="isLoading" class="loading-spinner">
+  Loading weather data...
+</div>
+
+<div *ngIf="forecastError" class="error-message">
+  ⚠️ {{ forecastError }}
+</div>
 
 <div *ngIf="weatherData">
   <div>
