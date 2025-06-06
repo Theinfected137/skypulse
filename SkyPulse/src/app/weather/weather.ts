@@ -28,16 +28,11 @@ export class Weather {
   dailyForecasts: any[] = [];
 
   getForecast() {
-    console.log('Attempting to fetch forecast for:', this.city); // Debug 1
     this.weatherService.get5DayForecast(this.city).subscribe({
       next: (data) => {
-        console.log('Forecast data received:', data); // Debug 2
         this.forecastData = data;
         this.processForecastData(data);
       },
-      error: (err) => {
-        console.error('Forecast error:', err); // Debug 3
-      }
     });
   }
 
@@ -59,8 +54,6 @@ export class Weather {
     this.dailyForecasts = Object.values(forecastsByDay)
       .sort((a, b) => a.dateObj - b.dateObj)
       .slice(0, 5);
-
-    console.log('Processed forecasts:', this.dailyForecasts);
   }
 
 }
