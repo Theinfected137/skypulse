@@ -2,7 +2,7 @@
 
 <p class="lead">Procura pela a Cidade que deseja que a gente fará o resto.</p>
 
-<form>
+<form class="search-form" action="">
   <div>
     <input (keyup)="searchCities(city)" [(ngModel)]="city" [ngModelOptions]="{ standalone: true }"
       placeholder="Procure sua Cidade" (focus)="showSuggestions = true" (blur)="hideSuggestions()">
@@ -24,7 +24,7 @@
   ⚠️ {{ forecastError }}
 </div>
 
-<div *ngIf="weatherData">
+<div class="weather-info" *ngIf="weatherData">
   <div>
     <h3 class="nomedacidade">{{ weatherData.name }}</h3>
     <p>{{ weatherData.main?.temp | number:'1.0-0' }}°C</p>
