@@ -10,6 +10,6 @@ export class Home {
   constructor(private router: Router) {}
 
   navigateToWeather() {
-    this.router.navigate(['/weather']); // Redirects to your search page
+    this.router.navigate(['/weather']);
   }
 }
