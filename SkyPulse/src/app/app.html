@@ -1,1 +1,28 @@
 <app-weather></app-weather>
+<h1>SkyPulse</h1>
+
+<p class="lead">Procura pela a Cidade que deseja que agente fará o resto.</p>
+
+<form action="">
+  <input (keydown.enter)="searchWeather()" [(ngModel)]="city" placeholder="Procure sua Cidade">
+</form>
+
+<div>
+  <div *ngIf="weatherData">
+    <div>
+      <h3 class="nomedacidade">{{ weatherData.name }}</h3>
+      <p>{{ weatherData.main?.temp }}°C</p>
+    </div>
+    <div>
+      <p>☁️ Conditions: {{ weatherData.weather?.[0]?.description }}</p>
+      <p>💨 Wind: {{ weatherData.wind?.speed }} m/s</p>
+    </div>
+  </div>
+  <div>
+    <div class="5day forescast">
+      <!-- @for (item of items; track $index) {
+
+      } -->
+    </div>
+  </div>
+</div>
