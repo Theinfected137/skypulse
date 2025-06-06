@@ -20,20 +20,23 @@ export class WeatherService {
       `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${this.apiKey}&units=metric&cnt=40`
     );
   }
-  
-  private geoApiUrl = 'https://api.openweathermap.org/geo/1.0/direct';
+
+  getWeatherByCoords(lat: number, lon: number): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=metric`
+    );
+  }
 
   getCitySuggestions(query: string): Observable<any[]> {
     return this.http.get<any[]>(
-      `${this.geoApiUrl}?q=${query}&limit=5&appid=${this.apiKey}`
-    ).pipe(
-      map(cities => cities.map(city => ({
-        name: city.name,
-        country: city.country,
-        state: city.state,
-        lat: city.lat,
-        lon: city.lon
-      })))
+      `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${this.apiKey}`
     );
   }
+
+  get5DayForecastByCoords(lat: number, lon: number): Observable<any> {
+  return this.http.get(
+    `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=metric&cnt=40`
+  );
+}
+
 }
