@@ -116,20 +116,53 @@ export class Weather {
     }
   }
 
-  selectCity(city: any) {
-    this.selectedCity = city;
-    this.city = `${city.name}, ${city.country}`;
-    this.suggestions = [];
-    this.showSuggestions = false;
-    this.searchWeather();
-  }
+selectCity(city: any) {
+  this.selectedCity = city;
+  this.city = `${city.name}, ${city.state ? city.state + ', ' : ''}${city.country}`;
+  this.suggestions = [];
+  this.showSuggestions = false;
+  this.weatherData = null;
+  this.dailyForecasts = [];
+  this.forecastError = null;
+  this.searchWeatherByCoords(city.lat, city.lon);
+}
+
+searchWeatherByCoords(lat: number, lon: number) {
+  this.isLoading = true;
+
+  this.weatherService.getWeatherByCoords(lat, lon).subscribe({
+    next: (data) => {
+      this.weatherData = data;
+      this.getForecastByCoords(lat, lon);
+    },
+    error: (err) => {
+      this.weatherData = null;
+      this.forecastError = 'Failed to get current weather data';
+      this.isLoading = false;
+    }
+  });
+}
+
+getForecastByCoords(lat: number, lon: number) {
+  this.weatherService.get5DayForecastByCoords(lat, lon).subscribe({
+    next: (data) => {
+      this.processForecastData(data);
+      this.isLoading = false;
+    },
+    error: (err) => {
+      this.dailyForecasts = [];
+      this.forecastError = 'Failed to get forecast data';
+      this.isLoading = false;
+    }
+  });
+}
 
 hideSuggestions() {
   setTimeout(() => this.showSuggestions = false, 200);
 }
 
 trackByCity(index: number, city: any): string {
-  return `${city.name}-${city.country}-${city.state || ''}`;
+  return `${city.name}-${city.country}-${city.state}-${city.lat}-${city.lon} || ''}`;
 }
 
 trackByDay(index: number, day: any): number {

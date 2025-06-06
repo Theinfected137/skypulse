@@ -4,23 +4,12 @@
 
 <form>
   <div>
-    <input 
-      type="text"
-      (keyup)="searchCities(city)" 
-      (keydown.enter)="$event.preventDefault(); searchWeather()" 
-      [(ngModel)]="city"
-      [ngModelOptions]="{ standalone: true }" 
-      placeholder="Procure sua Cidade" 
-      (focus)="showSuggestions = true"
-      (blur)="hideSuggestions()"
-    >
+    <input (keyup)="searchCities(city)" [(ngModel)]="city" [ngModelOptions]="{ standalone: true }"
+      placeholder="Procure sua Cidade" (focus)="showSuggestions = true" (blur)="hideSuggestions()">
 
     <div class="suggestions-dropdown" *ngIf="showSuggestions && suggestions.length > 0">
-      <div 
-        class="suggestion-item" 
-        *ngFor="let city of suggestions; trackBy: trackByCity"
-        (mousedown)="selectCity(city)"
-      >
+      <div class="suggestion-item" *ngFor="let city of suggestions; trackBy: trackByCity"
+        (mousedown)="selectCity(city)">
         {{ city.name }}, {{ city.state ? city.state + ', ' : '' }}{{ city.country }}
       </div>
     </div>
@@ -51,12 +40,8 @@
   <div class="forecast-grid">
     <div class="forecast-card" *ngFor="let day of dailyForecasts; trackBy: trackByDay">
       <h4>{{ day.dateObj | date:'EEE' }}</h4>
-      <img 
-        src="https://openweathermap.org/img/wn/{{ day.weather[0].icon }}@2x.png"
-        alt="{{ day.weather[0].description }}" 
-        width="50"
-        height="50"
-      >
+      <img src="https://openweathermap.org/img/wn/{{ day.weather[0].icon }}@2x.png"
+        alt="{{ day.weather[0].description }}" width="50" height="50">
       <div class="temps">
         <span class="max">{{ day.main.temp_max | number:'1.0-0' }}°</span>
         <span class="min">{{ day.main.temp_min | number:'1.0-0' }}°</span>
