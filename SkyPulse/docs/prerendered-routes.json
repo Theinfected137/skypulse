@@ -1,0 +1,6 @@
+{
+  "routes": {
+    "/flips-challenge": {},
+    "/flips-challenge/weather": {}
+  }
+}

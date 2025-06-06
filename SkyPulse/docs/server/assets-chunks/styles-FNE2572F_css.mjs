@@ -1,0 +1,2 @@
+export default `body{margin:0;height:100vh;width:100vw;background:linear-gradient(to bottom,#1a1a2e,#16213e);font-family:sans-serif}
+`;
