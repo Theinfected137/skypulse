@@ -1,13 +1,30 @@
 <h1>SkyPulse</h1>
 
-<p class="lead">Procura pela a Cidade que deseja que agente fará o resto.</p>
+<p class="lead">Procura pela a Cidade que deseja que a gente fará o resto.</p>
 
-<form action="">
-  <input 
-    (keydown.enter)="searchWeather()" 
-    [(ngModel)]="city" 
-    [ngModelOptions]="{ standalone: true }"
-    placeholder="Procure sua Cidade">
+<form>
+  <div>
+    <input 
+      type="text"
+      (keyup)="searchCities(city)" 
+      (keydown.enter)="$event.preventDefault(); searchWeather()" 
+      [(ngModel)]="city"
+      [ngModelOptions]="{ standalone: true }" 
+      placeholder="Procure sua Cidade" 
+      (focus)="showSuggestions = true"
+      (blur)="hideSuggestions()"
+    >
+
+    <div class="suggestions-dropdown" *ngIf="showSuggestions && suggestions.length > 0">
+      <div 
+        class="suggestion-item" 
+        *ngFor="let city of suggestions; trackBy: trackByCity"
+        (mousedown)="selectCity(city)"
+      >
+        {{ city.name }}, {{ city.state ? city.state + ', ' : '' }}{{ city.country }}
+      </div>
+    </div>
+  </div>
 </form>
 
 <div *ngIf="isLoading" class="loading-spinner">
@@ -21,24 +38,28 @@
 <div *ngIf="weatherData">
   <div>
     <h3 class="nomedacidade">{{ weatherData.name }}</h3>
-    <p>{{ weatherData.main?.temp }}°C</p>
+    <p>{{ weatherData.main?.temp | number:'1.0-0' }}°C</p>
   </div>
   <div>
     <p>☁️ Conditions: {{ weatherData.weather?.[0]?.description }}</p>
-    <p>💨 Wind: {{ weatherData.wind?.speed }} m/s</p>
+    <p>💨 Wind: {{ weatherData.wind?.speed | number:'1.1-1' }} m/s</p>
   </div>
 </div>
 
 <div class="forecast-container" *ngIf="dailyForecasts.length > 0">
   <h3>5-Day Forecast</h3>
   <div class="forecast-grid">
-    <div class="forecast-card" *ngFor="let day of dailyForecasts">
+    <div class="forecast-card" *ngFor="let day of dailyForecasts; trackBy: trackByDay">
       <h4>{{ day.dateObj | date:'EEE' }}</h4>
-      <img src="https://openweathermap.org/img/wn/{{ day.weather[0].icon }}@2x.png"
-        alt="{{ day.weather[0].description }}" width="50">
+      <img 
+        src="https://openweathermap.org/img/wn/{{ day.weather[0].icon }}@2x.png"
+        alt="{{ day.weather[0].description }}" 
+        width="50"
+        height="50"
+      >
       <div class="temps">
-        <span class="max">{{ day.main.temp_max }}°</span>
-        <span class="min">{{ day.main.temp_min }}°</span>
+        <span class="max">{{ day.main.temp_max | number:'1.0-0' }}°</span>
+        <span class="min">{{ day.main.temp_min | number:'1.0-0' }}°</span>
       </div>
       <p>{{ day.weather[0].description }}</p>
     </div>

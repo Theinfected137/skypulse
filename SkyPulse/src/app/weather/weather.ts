@@ -20,16 +20,28 @@ export class Weather {
   constructor(private weatherService: WeatherService) { }
 
   searchWeather() {
+    if (!this.selectedCity && this.city.includes(',')) {
+      const parts = this.city.split(',');
+      this.selectedCity = {
+        name: parts[0].trim(),
+        country: parts[1].trim()
+      };
+    }
+
     this.isLoading = true;
     this.forecastError = null;
 
-    this.weatherService.getWeather(this.city).subscribe({
+    const searchQuery = this.selectedCity
+      ? `${this.selectedCity.name},${this.selectedCountry?.code || this.selectedCity.country}`
+      : this.city;
+
+    this.weatherService.getWeather(searchQuery).subscribe({
       next: (data) => {
         this.weatherData = data;
       },
       error: (err) => {
         this.weatherData = null;
-        this.forecastError = 'Failed to get forecast data. Please check the city name and try again.';
+        this.forecastError = 'Failed to get current weather data';
         this.isLoading = false;
       }
     });
@@ -80,4 +92,48 @@ export class Weather {
       console.error('Processing error:', error);
     }
   }
+
+  suggestions: any[] = [];
+  showSuggestions = false;
+  selectedCountry: any = null;
+  selectedCity: any = null;
+
+  searchCities(query: string) {
+    if (query.length > 2) {
+      this.weatherService.getCitySuggestions(query).subscribe({
+        next: (cities) => {
+          this.suggestions = cities;
+          this.showSuggestions = cities.length > 0;
+        },
+        error: (err) => {
+          this.suggestions = [];
+          this.showSuggestions = false;
+        }
+      });
+    } else {
+      this.suggestions = [];
+      this.showSuggestions = false;
+    }
+  }
+
+  selectCity(city: any) {
+    this.selectedCity = city;
+    this.city = `${city.name}, ${city.country}`;
+    this.suggestions = [];
+    this.showSuggestions = false;
+    this.searchWeather();
+  }
+
+hideSuggestions() {
+  setTimeout(() => this.showSuggestions = false, 200);
+}
+
+trackByCity(index: number, city: any): string {
+  return `${city.name}-${city.country}-${city.state || ''}`;
+}
+
+trackByDay(index: number, day: any): number {
+  return day.dt;
+}
+
 }
